@@ -8,7 +8,7 @@ namespace Sirilix.WatchoutController.Feedbacks
 {
     /// <summary>
     /// Sent once when becomes ready after being busy (as indicated by one or more
-    ///Busy messages). Also sent as response to the “ping” command. 
+    /// Busy messages). Also sent as response to the “ping” command. 
     /// </summary>
     /// <seealso cref="Sirilix.WatchoutController.WatchoutFeedback" />
     [FeedbackName("Ready")]
