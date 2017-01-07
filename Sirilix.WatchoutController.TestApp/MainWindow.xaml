@@ -1,0 +1,151 @@
+﻿<metro:MetroWindow x:Class="Sirilix.WatchoutController.TestApp.MainWindow"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Sirilix.WatchoutController.TestApp"
+        Title="Watchout Controller Test App" Height="600" Width="800" MinWidth="800" MinHeight="600" EnableDWMDropShadow="True" WindowStartupLocation="CenterScreen" Icon="Images/blueprint.png" Background="#202020" Foreground="Gainsboro" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme.xaml"></ResourceDictionary>
+
+                <ResourceDictionary>
+                    <Style TargetType="{x:Type local:AwesomeButton}" x:Key="toolButton">
+                        <Setter Property="Width" Value="25"></Setter>
+                        <Setter Property="Height" Value="25"></Setter>
+                        <Setter Property="Cursor" Value="Hand"></Setter>
+                        <Setter Property="NormalBrush" Value="{StaticResource NormalBrush}"></Setter>
+                        <Setter Property="HoverBrush" Value="{StaticResource HoverBrush}"></Setter>
+                        <Setter Property="PressBrush" Value="#303030"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <Setter Property="Opacity" Value="1"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.3"></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}" x:Key="CommandButton">
+                        <Setter Property="Foreground" Value="{StaticResource SelectedBackgroundBrush}"></Setter>
+                        <Setter Property="Background" Value="#303030"></Setter>
+                        <Setter Property="FontWeight" Value="Bold"></Setter>
+                    </Style>
+
+                    <DataTemplate x:Key="listItemTemplate">
+                        <Grid HorizontalAlignment="Stretch" Background="Transparent">
+                            <StackPanel Margin="2">
+                                <TextBlock Text="{Binding Name}" FontSize="16"></TextBlock>
+                                <TextBlock Margin="0 2 0 0" Text="{Binding AuxiliaryTimelineName}" FontSize="11" Opacity="0.7"></TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <metro:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Image Source="{Binding}" Width="20" Height="20"></Image>
+        </DataTemplate>
+    </metro:MetroWindow.IconTemplate>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" Height="60" Margin="10 0 0 0">
+                <Image Source="Images/blueprint.png"></Image>
+                <TextBlock Margin="20 0 0 0" VerticalAlignment="Center" FontSize="30" Foreground="{StaticResource SelectedBackgroundBrush}">Watchout Controller Test App</TextBlock>
+            </StackPanel>
+            <Rectangle VerticalAlignment="Bottom" HorizontalAlignment="Stretch" StrokeThickness="1" Stroke="{StaticResource SelectedBackgroundBrush}" StrokeDashArray="5 5 5 5" Margin="90 10 100 0"></Rectangle>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*"/>
+                <RowDefinition Height="50*"/>
+            </Grid.RowDefinitions>
+            
+            <GridSplitter VerticalAlignment="Top" Margin="20 10 20 0" HorizontalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Height="3" Background="#303030"></GridSplitter>
+            <Grid x:Name="gridMovies" Grid.Column="1" Margin="20 20 20 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal">
+                    <local:AwesomeButton Command="{Binding AddNewTimelinesItemCommand}" Image="PlusSquare" Style="{StaticResource toolButton}" ToolTip="Add New Item" Margin="10 0 0 0"/>
+                    <local:AwesomeButton Command="{Binding RemoveSelectedTimelinesItemCommand}" Image="MinusSquare" Style="{StaticResource toolButton}" ToolTip="Remove Selected Item" Margin="2 0 0 0"/>
+                    <TextBlock VerticalAlignment="Center" Margin="10 0 0 0" FontSize="16">TIMELINES</TextBlock>
+                </StackPanel>
+
+                <ListBox Grid.Row="1" BorderThickness="0" ItemsSource="{Binding Settings.Timelines}" SelectedValue="{Binding SelectedTimelinesItem}" ItemTemplate="{StaticResource listItemTemplate}">
+
+                </ListBox>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="20" Background="#181818">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 25 0 0">
+                        <TextBlock >Name</TextBlock>
+                        <TextBox Width="200" Margin="0 5 0 0" Height="30" Padding="0 1 0 0" FontSize="16" Foreground="Red" HorizontalContentAlignment="Center" Text="{Binding SelectedTabletButton.Name,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20 25 0 0">
+                        <TextBlock>Auxiliary Timeline</TextBlock>
+                        <TextBox Width="270" Margin="0 5 0 0" Height="30" Padding="0 1 0 0" FontSize="16" Foreground="Red" HorizontalContentAlignment="Center" Text="{Binding SelectedTabletButton.AuxiliaryTimelineName,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+                    <local:AwesomeButton Height="30" Width="30" Image="Play" Style="{StaticResource toolButton}" IsEnabled="{Binding IsConnected}" Command="{Binding StartTimelineCommand}" Margin="20 10 0 0" ToolTip="Start selected timeline"/>
+                    <local:AwesomeButton Height="30" Width="30" Image="Pause" Style="{StaticResource toolButton}" IsEnabled="{Binding IsConnected}" Command="{Binding PauseTimelineCommand}" Margin="20 10 0 0" ToolTip="Pause selected timeline" />
+                    <local:AwesomeButton Height="30" Width="30" Image="Stop" Style="{StaticResource toolButton}" IsEnabled="{Binding IsConnected}" Command="{Binding StopTimelineCommand}" Margin="20 10 0 0" ToolTip="Stop selected timeline" />
+                    <local:AwesomeButton Height="30" Width="30" Image="Refresh" ToolTip="Stop all timelines" Style="{StaticResource toolButton}" IsEnabled="{Binding IsConnected}" Command="{Binding ResetWatchoutCommand}" Margin="20 10 0 0" />
+                </StackPanel>
+                <Grid Grid.Row="1" Background="#121212">
+                    <TextBox Padding="5" x:Name="txtLog" Background="Transparent" BorderThickness="0" AcceptsReturn="True" TextWrapping="Wrap" Foreground="Yellow" Opacity="0.5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
+
+                    <Border HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Height="30" BorderThickness="1 0 1 1" BorderBrush="DimGray" CornerRadius="0 0 15 15" Background="#303030" Opacity="0.5">
+                        <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Yellow">WATCHOUT LOGS</TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 10">
+                <Button Width="140" Margin="10" Command="{Binding ToggleConnectionCommand}" ToolTip="Connect to Watchout Production Server">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource CommandButton}">
+                            <Setter Property="Content" Value="CONNECT"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                    <Setter Property="Content" Value="DISCONNECT"></Setter>
+                                    <Setter Property="Background" Value="DarkGreen"></Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                    <Setter Property="Content" Value="CONNECT"></Setter>
+                                    <Setter Property="Background" Value="#303030"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Width="140" Margin="10" Command="{Binding SaveCommand}" Style="{StaticResource CommandButton}" ToolTip="Save current configuration">SAVE</Button>
+                <Button Width="140" Margin="10" Command="{Binding CloseCommand}" Style="{StaticResource CommandButton}">CLOSE</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20 5 0 0">
+                <StackPanel>
+                    <TextBlock VerticalAlignment="Center">Watchout Production Machine Address:</TextBlock>
+                    <TextBox Width="215" Margin="0 5 0 0" Height="30" Padding="0 1 0 0" FontSize="16" Foreground="Red" HorizontalContentAlignment="Center" Text="{Binding Settings.WatchoutServerAddress,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</metro:MetroWindow>
