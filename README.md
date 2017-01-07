@@ -1,5 +1,5 @@
 # Datatone Watchout Controller
-A Datatone Watchout TCP Client Libary.
+A Datatone Watchout TCP Client C# Libary.
 
 This libary aimes to provide a simple asynchronous communication API over TCP/IP in order to control the Datatone Watchout Production/Display Software.
 
