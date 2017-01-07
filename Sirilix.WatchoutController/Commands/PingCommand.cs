@@ -12,6 +12,9 @@ namespace Sirilix.WatchoutController.Commands
     /// <seealso cref="Sirilix.WatchoutController.WatchoutCommand" />
     public class PingCommand : WatchoutCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PingCommand"/> class.
+        /// </summary>
         public PingCommand()
             : base("ping")
         {

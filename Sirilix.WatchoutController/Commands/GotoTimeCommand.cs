@@ -12,6 +12,9 @@ namespace Sirilix.WatchoutController.Commands
     /// <seealso cref="Sirilix.WatchoutController.WatchoutCommand" />
     public class GotoTimeCommand : WatchoutCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GotoTimeCommand"/> class.
+        /// </summary>
         public GotoTimeCommand()
             : base("gotoTime")
         {

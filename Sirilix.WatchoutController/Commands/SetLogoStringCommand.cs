@@ -8,11 +8,14 @@ namespace Sirilix.WatchoutController.Commands
 {
     /// <summary>
     /// Display the string parameter next to the WATCHOUT logo, when shown on
-    //screen.
+    /// screen.
     /// </summary>
     /// <seealso cref="Sirilix.WatchoutController.WatchoutCommand" />
     public class SetLogoStringCommand : WatchoutCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SetLogoStringCommand"/> class.
+        /// </summary>
         public SetLogoStringCommand()
             : base("setLogoString")
         {

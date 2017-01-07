@@ -12,6 +12,9 @@ namespace Sirilix.WatchoutController.Commands
     /// <seealso cref="Sirilix.WatchoutController.WatchoutCommand" />
     public class ResetCommand : WatchoutCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResetCommand"/> class.
+        /// </summary>
         public ResetCommand()
             : base("reset")
         {

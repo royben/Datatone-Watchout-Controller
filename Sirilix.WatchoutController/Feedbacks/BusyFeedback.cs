@@ -8,7 +8,7 @@ namespace Sirilix.WatchoutController.Feedbacks
 {
     /// <summary>
     /// Sent repeatedly while busy doing lengthy tasks, such as downloading or
-    //caching files.
+    /// caching files.
     /// </summary>
     /// <seealso cref="Sirilix.WatchoutController.WatchoutFeedback" />
     [FeedbackName("Busy")]

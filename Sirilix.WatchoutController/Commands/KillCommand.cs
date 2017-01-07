@@ -12,6 +12,9 @@ namespace Sirilix.WatchoutController.Commands
     /// <seealso cref="Sirilix.WatchoutController.WatchoutCommand" />
     public class KillCommand : WatchoutCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KillCommand"/> class.
+        /// </summary>
         public KillCommand()
             : base("kill")
         {

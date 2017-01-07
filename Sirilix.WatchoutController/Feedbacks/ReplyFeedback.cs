@@ -8,10 +8,10 @@ namespace Sirilix.WatchoutController.Feedbacks
 {
     /// <summary>
     /// A Reply feedback message is sent as a direct response to a query command
-    //(for instance, getStatus described on page 265). Use a command ID to positively
-    //associate the reply with the command.
-    //The format of the reply parameter(s) depends on the command that caused the
-    //reply to be sent.
+    /// (for instance, getStatus described on page 265). Use a command ID to positively
+    /// associate the reply with the command.
+    /// The format of the reply parameter(s) depends on the command that caused the
+    /// reply to be sent.
     /// </summary>
     [FeedbackName("Reply")]
     public class ReplyFeedback : WatchoutFeedback
@@ -28,7 +28,7 @@ namespace Sirilix.WatchoutController.Feedbacks
 
         /// <summary>
         /// General health status of the cluster; 0: OK, 1: Suboptimal, 2: Problems, 3:
-        //Dead.
+        /// Dead.
         /// </summary>
         public ClusterHealth ClusterHealth { get; set; }
 

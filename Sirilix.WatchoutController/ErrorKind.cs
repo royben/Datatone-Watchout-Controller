@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Sirilix.WatchoutController
 {
+    /// <summary>
+    /// Represents the enumeration for the different kinds of the Watchout server errors.
+    /// </summary>
     public enum ErrorKind
     {
         /// <summary>

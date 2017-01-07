@@ -72,7 +72,6 @@
     <Compile Include="IWatchoutDisplayClient.cs" />
     <Compile Include="IWatchoutCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResponseCallbackObject.cs" />
     <Compile Include="WatchoutCommand.cs" />
     <Compile Include="WatchoutDisplayClient.cs" />
     <Compile Include="WatchoutFeedback.cs" />

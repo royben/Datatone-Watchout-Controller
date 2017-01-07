@@ -12,6 +12,9 @@ namespace Sirilix.WatchoutController.Commands
     /// <seealso cref="Sirilix.WatchoutController.WatchoutCommand" />
     public class HaltCommand : WatchoutCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HaltCommand"/> class.
+        /// </summary>
         public HaltCommand()
             : base("halt")
         {

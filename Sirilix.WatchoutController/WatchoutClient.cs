@@ -14,24 +14,48 @@ using Sirilix.WatchoutController.Commands;
 
 namespace Sirilix.WatchoutController
 {
+    /// <summary>
+    /// Represents an abstract base class for all Watchout clients.
+    /// </summary>
+    /// <seealso cref="Sirilix.WatchoutController.IWatchoutClient" />
     public abstract class WatchoutClient : IWatchoutClient
     {
-        private Thread receivingThread;
-        private Thread sendingThread;
-        private List<ResponseCallbackObject> callBacks;
-        private TcpClient _tcpClient;
-        private ConcurrentQueue<WatchoutCommand> _commandQueue;
-        private List<WatchoutFeedback> _availableFeedbacks;
-        private int _port;
+        private Thread receivingThread; //Separate thread for receiving feedbacks from the Watchout server.
+        private Thread sendingThread; //Separate thread for sending commands.
+        private TcpClient _tcpClient; //Encapsulated TCP client.
+        private ConcurrentQueue<WatchoutCommand> _commandQueue; //Thread safe queue for holding commands to be sent.
+        private List<WatchoutFeedback> _availableFeedbacks; //Contains the available feedbacks received from the Watchout server.
+        private int _port; //The Watchout server port.
 
         #region Properties
 
+        /// <summary>
+        /// Gets the Watchout server host address.
+        /// </summary>
+        /// <value>
+        /// The host address.
+        /// </value>
         public String Host { get; private set; }
 
+        /// <summary>
+        /// Gets the Watchout server port.
+        /// </summary>
+        /// <value>
+        /// The server port.
+        /// </value>
         public int Port { get; private set; }
 
+        /// <summary>
+        /// Gets a value indicating whether this client is connected.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this client is connected; otherwise, <c>false</c>.
+        /// </value>
         public bool IsConnected { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the number of seconds until a async command will return with an error if no proper feedback had arrived (Default is 2 seconds). 
+        /// </summary>
         public int CommandsTimeout { get; set; }
 
         #endregion
@@ -41,19 +65,22 @@ namespace Sirilix.WatchoutController
         /// <summary>
         /// Initializes a new instance of the <see cref="WatchoutClient"/> class.
         /// </summary>
+        /// <param name="port">The server port.</param>
         public WatchoutClient(int port)
         {
             _port = port;
             _availableFeedbacks = new List<WatchoutFeedback>();
-            callBacks = new List<ResponseCallbackObject>();
             _commandQueue = new ConcurrentQueue<WatchoutCommand>();
-            CommandsTimeout = 5;
+            CommandsTimeout = 2;
         }
 
         #endregion
 
         #region Threads Methods
 
+        /// <summary>
+        /// Sending thread loop.
+        /// </summary>
         private void SendingMethod()
         {
             while (IsConnected)
@@ -81,6 +108,9 @@ namespace Sirilix.WatchoutController
             }
         }
 
+        /// <summary>
+        /// Receiving thread loop.
+        /// </summary>
         private void ReceivingMethod()
         {
             while (IsConnected)
@@ -103,9 +133,13 @@ namespace Sirilix.WatchoutController
 
         #region Virtual Methods
 
-        protected virtual void OnFeedbackReceived(String command)
+        /// <summary>
+        /// Called when a feedback has been received.
+        /// </summary>
+        /// <param name="response">The response string.</param>
+        protected virtual void OnFeedbackReceived(String response)
         {
-            var feedback = CommandFormatter.Deserialize(command);
+            var feedback = CommandFormatter.Deserialize(response);
             if (feedback != null)
             {
                 if (feedback.ID != null)
@@ -126,46 +160,22 @@ namespace Sirilix.WatchoutController
 
         #endregion
 
-        #region Callback Methods
-
-        //private void AddCallback(Delegate callBack, MessageBase msg)
-        //{
-        //    if (callBack != null)
-        //    {
-        //        Guid callbackID = Guid.NewGuid();
-        //        ResponseCallbackObject responseCallback = new ResponseCallbackObject()
-        //        {
-        //            ID = callbackID,
-        //            CallBack = callBack
-        //        };
-
-        //        msg.CallbackID = callbackID;
-        //        callBacks.Add(responseCallback);
-        //    }
-        //}
-
-        //private void InvokeMessageCallback(MessageBase msg, bool deleteCallback)
-        //{
-        //    var callBackObject = callBacks.SingleOrDefault(x => x.ID == msg.CallbackID);
-
-        //    if (callBackObject != null)
-        //    {
-        //        if (deleteCallback)
-        //        {
-        //            callBacks.Remove(callBackObject);
-        //        }
-        //        callBackObject.CallBack.DynamicInvoke(this, msg);
-        //    }
-        //}
-
-        #endregion
-
         #region IWatchoutClient Members
 
+        /// <summary>
+        /// Occurs when a feedback has been received from the Watchout server.
+        /// </summary>
         public event EventHandler<WatchoutFeedback> FeedbackReceived;
 
+        /// <summary>
+        /// Occurs when an error has been received from the Watchout server.
+        /// </summary>
         public event EventHandler<ErrorFeedback> ErrorReceived;
 
+        /// <summary>
+        /// Connects the client to the specified Watchout computer.
+        /// </summary>
+        /// <param name="host">The host IP address.</param>
         public void Connect(String host)
         {
             if (IsConnected)
@@ -190,6 +200,9 @@ namespace Sirilix.WatchoutController
             sendingThread.Start();
         }
 
+        /// <summary>
+        /// Disconnects from the Watchout server.
+        /// </summary>
         public void Disconnect()
         {
             if (!IsConnected)
@@ -199,7 +212,6 @@ namespace Sirilix.WatchoutController
 
             _commandQueue = new ConcurrentQueue<WatchoutCommand>();
             _availableFeedbacks = new List<WatchoutFeedback>();
-            callBacks.Clear();
             Thread.Sleep(1000);
             IsConnected = false;
             Thread.Sleep(200);
@@ -207,11 +219,35 @@ namespace Sirilix.WatchoutController
             _tcpClient.Close();
         }
 
+        /// <summary>
+        /// Sends a string command.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        public void SendCommand(string command)
+        {
+            Debug.WriteLine("Sending: " + command);
+            var stream = _tcpClient.GetStream();
+            byte[] commandBytes = Encoding.UTF8.GetBytes(command + "\r\n");
+            stream.Write(commandBytes, 0, commandBytes.Length);
+        }
+
+        /// <summary>
+        /// Sends the specified <see cref="WatchoutCommand" />.
+        /// </summary>
+        /// <param name="command">The command.</param>
         public void SendCommand(WatchoutCommand command)
         {
             _commandQueue.Enqueue(command);
         }
 
+        /// <summary>
+        /// Sends the specified <see cref="WatchoutCommand" /> asynchronously while waiting for a response.
+        /// </summary>
+        /// <typeparam name="T">The <see cref="WatchoutFeedback" /> type.</typeparam>
+        /// <param name="command">The command.</param>
+        /// <returns>
+        /// Returns the proper feedback.
+        /// </returns>
         public async Task<T> SendCommand<T>(WatchoutCommand command) where T : WatchoutFeedback
         {
             Task<T> task = new Task<T>(() =>
@@ -256,14 +292,6 @@ namespace Sirilix.WatchoutController
             task.Start();
             await task;
             return task.Result;
-        }
-
-        public void SendCommand(string command)
-        {
-            Debug.WriteLine("Sending: " + command);
-            var stream = _tcpClient.GetStream();
-            byte[] commandBytes = Encoding.UTF8.GetBytes(command + "\r\n");
-            stream.Write(commandBytes, 0, commandBytes.Length);
         }
 
         #endregion

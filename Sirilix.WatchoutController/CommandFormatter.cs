@@ -9,8 +9,16 @@ using System.Threading.Tasks;
 
 namespace Sirilix.WatchoutController
 {
+    /// <summary>
+    /// Represents a Watchout command formatter.
+    /// </summary>
     public static class CommandFormatter
     {
+        /// <summary>
+        /// Serializes the specified command.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <returns>A string representation of the command.</returns>
         public static String Serialize(WatchoutCommand command)
         {
             String str = String.Format("[{0}]{1}", command.ID, command.Name);
@@ -47,6 +55,11 @@ namespace Sirilix.WatchoutController
             return str + "\r\n";
         }
 
+        /// <summary>
+        /// Deserializes the specified response string and returns the proper <see cref="WatchoutFeedback"/>.
+        /// </summary>
+        /// <param name="response">The response string.</param>
+        /// <returns>Returns the proper <see cref="WatchoutFeedback"/>.</returns>
         public static WatchoutFeedback Deserialize(String response)
         {
             response = RemoveCarriageReturn(response);
@@ -126,6 +139,11 @@ namespace Sirilix.WatchoutController
             //throw new UnrecognizedFeedbackException("Unrecognized feedback received. " + response);
         }
 
+        /// <summary>
+        /// Removes the carriage return occurrences in the specified string.
+        /// </summary>
+        /// <param name="response">The response string.</param>
+        /// <returns>The processed string.</returns>
         private static String RemoveCarriageReturn(String response)
         {
             string lineSeparator = ((char)0x2028).ToString();

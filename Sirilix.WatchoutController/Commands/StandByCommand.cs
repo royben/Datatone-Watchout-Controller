@@ -8,13 +8,16 @@ namespace Sirilix.WatchoutController.Commands
 {
     /// <summary>
     /// Enter/exit standby mode. In standby, the display and sound is muted, or
-    ///media on standby layers – if any – is performed (see “Perform Normal/In
-    ///Standby” on page 104). This mode can be entered/exited smoothly, by specifying
-    ///a fade rate
+    /// media on standby layers – if any – is performed (see “Perform Normal/In
+    /// Standby” on page 104). This mode can be entered/exited smoothly, by specifying
+    /// a fade rate
     /// </summary>
     /// <seealso cref="Sirilix.WatchoutController.WatchoutCommand" />
     public class StandByCommand : WatchoutCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StandByCommand"/> class.
+        /// </summary>
         public StandByCommand()
             : base("standBy")
         {

@@ -14,6 +14,9 @@ namespace Sirilix.WatchoutController.Commands
     /// <seealso cref="Sirilix.WatchoutController.WatchoutCommand" />
     public class SetInputCommand : WatchoutCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SetInputCommand"/> class.
+        /// </summary>
         public SetInputCommand()
             : base("setInput")
         {

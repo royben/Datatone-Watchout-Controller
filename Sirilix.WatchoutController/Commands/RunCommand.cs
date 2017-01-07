@@ -12,6 +12,9 @@ namespace Sirilix.WatchoutController.Commands
     /// <seealso cref="Sirilix.WatchoutController.WatchoutCommand" />
     public class RunCommand : WatchoutCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RunCommand"/> class.
+        /// </summary>
         public RunCommand()
             : base("run")
         {
