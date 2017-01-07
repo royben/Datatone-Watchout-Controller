@@ -50,7 +50,7 @@ The following commands are supported:
 <li><b>wait</b> - Waits for the entire display cluster to become established.</li>
 </ul>
 
-Usage Example
+<h3>Usage Example<h3>
 
 <pre><code class='language-cs'>
 
