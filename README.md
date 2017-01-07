@@ -13,9 +13,9 @@ All API implementations are bound to the Datatone Watchout manual: https://www.d
 
 The API includes two separate interfaces:
 <br/>
-<b>IWatchoutProductionClient</b> - for controlling the Watchout Production computer.
+<b>WatchoutProductionClient</b> - for interacting with the Watchout Production computer.
 <br/>
-<b>IWatchoutDisplayClient</b> - for controlling the Watchout Display computer.
+<b>WatchoutDisplayClient</b> - for interacting with the Watchout Display computer.
 
 The following commands are supported:
 
