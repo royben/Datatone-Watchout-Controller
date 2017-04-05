@@ -71,7 +71,8 @@ private async void Example()
       MessageBox.Show(result.Error.ToString());
    }
 }
-'''
+
+```
 
 <h3>Sample Application<h3>
 
