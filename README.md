@@ -54,7 +54,7 @@ The following commands are supported:
 
 <h3>Usage Example<h3>
 
-<pre><code class='language-cs'>
+```csharp
 
 private async void Example()
 {
@@ -71,7 +71,7 @@ private async void Example()
       MessageBox.Show(result.Error.ToString());
    }
 }
-</code></pre>
+'''
 
 <h3>Sample Application<h3>
 
