@@ -1,9 +1,9 @@
 # Datatone Watchout Controller
-A Datatone Watchout TCP Client Libary.
+A Datatone Watchout TCP Client C# Libary.
 
 This libary aimes to provide a simple asynchronous communication API over TCP/IP in order to control the Datatone Watchout Production/Display Software.
 
-The projects is well structured and documented.
+The projects is well structured, documented and contains a good WPF sample project for interacting with a Production server.
 
 All API implementations are bound to the Datatone Watchout manual: https://www.dataton.com/assets/Products/Watchout/WATCHOUT_5_Users_Guide.pdf
 
@@ -13,9 +13,9 @@ All API implementations are bound to the Datatone Watchout manual: https://www.d
 
 The API includes two separate interfaces:
 <br/>
-<b>IWatchoutProductionClient</b> - for controlling the Watchout Production computer.
+<b>WatchoutProductionClient</b> - for interacting with the Watchout Production computer.
 <br/>
-<b>IWatchoutDisplayClient</b> - for controlling the Watchout Display computer.
+<b>WatchoutDisplayClient</b> - for interacting with the Watchout Display computer.
 
 The following commands are supported:
 
