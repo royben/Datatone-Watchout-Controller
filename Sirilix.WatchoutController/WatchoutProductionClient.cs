@@ -25,6 +25,15 @@ namespace Sirilix.WatchoutController
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="WatchoutProductionClient"/> class.
+        /// </summary>
+        public WatchoutProductionClient(int port)
+            : base(port)
+        {
+
+        }
+
+        /// <summary>
         /// Do-nothing command causing a Ready feedback message to be sent.
         /// </summary>
         /// <returns></returns>
