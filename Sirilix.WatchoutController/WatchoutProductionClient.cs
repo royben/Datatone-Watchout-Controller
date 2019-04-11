@@ -129,6 +129,20 @@ namespace Sirilix.WatchoutController
         }
 
         /// <summary>
+        /// Enter/exit standby mode. In standby, the display and sound is muted, or
+        /// media on standby layers – if any – is performed (see “Perform Normal/In
+        /// Standby” on page 104). This mode can be entered/exited smoothly, by specifying
+        /// a fade rate
+        /// </summary>
+        /// <param name="standBy">if set to <c>true</c> [stand by].</param>
+        /// <param name="fadeTime">set to fadeTime.</param>
+        /// <returns></returns>
+        public async Task<WatchoutFeedback> StandBy(bool standBy, uint fadeTime)
+        {
+            return await SendCommand<WatchoutFeedback>(new StandByCommand() { StandBy = standBy, FadeRate = fadeTime });
+        }
+
+        /// <summary>
         /// Control the online status of the production software.
         /// </summary>
         /// <param name="online">if set to <c>true</c> [online].</param>
