@@ -39,6 +39,11 @@ namespace Sirilix.WatchoutController
                     {
                         value = o.ToString().ToLower();
                     }
+                    else if (prop.PropertyType == typeof(bool?))
+                    {
+                        bool? b = o as bool?;
+                        value = b != null ? b.ToString().ToLower() : "false";
+                    }
                     else if (prop.PropertyType == typeof(TimeSpan))
                     {
                         value = "\"" + ((TimeSpan)o).ToString(@"hh\:mm\:ss\.fff") + "\"";
